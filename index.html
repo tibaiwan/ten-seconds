@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>挑战十秒整</title>
+  <meta name=keywords content="挑战十秒整">
+  <meta name=description content="挑战十秒整">
+  <meta name=apple-mobile-web-app-capable content=yes>
+  <meta name=apple-mobile-web-app-status-bar-style content=black>
+  <meta name=format-detection content="telephone=no">
+  <meta name=format-detection content="email=no">
+  <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=0">
+  <script>
+    /* 自适应设备DPR */
+    window.onload = function(){ getRem(720, 100) };
+    function getRem(pwidth, prem){
+      var html = document.getElementsByTagName("html")[0];
+      var oWidth = document.body.clientWidth || document.documentElement.clientWidth;
+      html.style.fontSize = oWidth/pwidth*prem + "px";
+      html.setAttribute('data-dpr', window.devicePixelRatio);
+    }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .box-wrap, .btn-wrap {
+      margin: 20vh auto;
+      text-align: center;
+    }
+    .box-wrap span {
+      display: inline-block;
+    }
+    .box-wrap .second {
+      width: 15vw;
+      text-align: right;
+    }
+    .box-wrap .point {
+      width: 2vw;
+    }
+    .box-wrap .milliSec {
+      width: 25vw;
+    }
+  </style>
+<body>
+<div class="box-wrap">
+  <span id="second" class="second">00</span>
+  <span class="point">.</span>
+  <span id="milliSec" class="milliSec">000</span>
+</div>
+<div class="btn-wrap">
+  <span id="startBtn" class="button button-3d button-action button-pill">开始</span>
+</div>
+<script>
+  var second = document.getElementById("second")
+  var milliSec = document.getElementById("milliSec")
+  var but = document.getElementById("startBtn")
+  var type = "start", interval ="";
+  but.addEventListener("click", function () {
+    if (type === "start") {
+      but.innerText = '暂停'
+      type = 'end'
+      var baseDate = +new Date();
+      var timestamp, seconds, milliStr;
+      interval = setInterval(function(){
+        timestamp = new Date() - baseDate;
+        console.log(timestamp)
+        milliSec.innerHTML = (timestamp >= 1000 ? timestamp % 1000 : timestamp)
+        second.innerHTML = Math.floor(timestamp / 1000)
+        if (timestamp / 1000 >= 20) {
+          clearInterval(interval)
+          but.innerText = '再来一次';
+          type = 'start'
+          second.innerText = "00"
+          milliSec.innerText = "000"
+        }
+      }, 0.1)
+    } else {
+      clearInterval(interval);
+      but.innerText = '再来一次';
+      type = 'start'
+    }
+  });
+</script>
+</body>
+<style>
+  .button-3d.button-action:active, .button-3d.button-action.active, .button-3d.button-action.is-active {
+    -webkit-box-shadow: 0 2px 0 #6b9619, 0 3px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 0 #6b9619, 0 3px 3px rgba(0, 0, 0, 0.2);
+  }
+  .button-3d:active, .button-3d.active, .button-3d.is-active {
+    top: 5px;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: .15s;
+    transition-duration: .15s;
+    -webkit-box-shadow: 0 2px 0 #bbbbbb, 0 3px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 0 #bbbbbb, 0 3px 3px rgba(0, 0, 0, 0.2);
+  }
+  .button-3d.button-action {
+    -webkit-box-shadow: 0 7px 0 #8bc220, 0 8px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 7px 0 #8bc220, 0 8px 3px rgba(0, 0, 0, 0.3);
+  }
+  .button-3d {
+    position: relative;
+    top: 0;
+    -webkit-box-shadow: 0 7px 0 #bbbbbb, 0 8px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 7px 0 #bbbbbb, 0 8px 3px rgba(0, 0, 0, 0.2);
+  }
+  .button-pill {
+    border-radius: 200px;
+  }
+  .button-action, .button-action-flat {
+    background-color: #A5DE37;
+    border-color: #A5DE37;
+    color: #FFF;
+  }
+  .button {
+    color: #666;
+    background-color: #EEE;
+    border-color: #EEE;
+    font-weight: 300;
+    font-size: 16px;
+    font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    text-decoration: none;
+    text-align: center;
+    line-height: 40px;
+    height: 40px;
+    padding: 0 40px;
+    margin: 0;
+    display: inline-block;
+    appearance: none;
+    cursor: pointer;
+    border: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s;
+  }
+  .button-action, .button-action-flat {
+    background-color: #A5DE37;
+    border-color: #A5DE37;
+    color: #FFF;
+  }
+</style>
+</html>
