@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,61 +26,84 @@
       padding: 0;
       box-sizing: border-box;
     }
+    .title {
+      display: flex;
+      margin-top: 4vh;
+      justify-content: center;
+      align-items: center;
+      font-size: .6rem;
+      color: orange;
+    }
     .box-wrap, .btn-wrap {
-      margin: 20vh auto;
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      margin: 15vh auto;
     }
     .box-wrap span {
-      display: inline-block;
+      margin-right: 0.8vw;
     }
-    .box-wrap .second {
-      width: 15vw;
-      text-align: right;
+    .box-wrap .number {
+      vertical-align: baseline;
+      padding: 2vw;
+      border: 1px solid #ccc;
+      border-radius: 10%;
     }
     .box-wrap .point {
-      width: 2vw;
-    }
-    .box-wrap .milliSec {
-      width: 25vw;
+      width: 3vw;
     }
   </style>
 <body>
+<div class="title">挑战10秒整！</div>
 <div class="box-wrap">
-  <span id="second" class="second">00</span>
+  <span id="f" class="number">0</span>
+  <span id="e" class="number">0</span>
   <span class="point">.</span>
-  <span id="milliSec" class="milliSec">000</span>
+  <span id="d" class="number">0</span>
+  <span id="c" class="number">0</span>
+  <span id="b" class="number">0</span>
+  <span id="a" class="number">0</span>
 </div>
 <div class="btn-wrap">
-  <span id="startBtn" class="button button-3d button-action button-pill">开始</span>
+  <span id="operateBtn" class="button button-3d button-action button-pill">开始</span>
 </div>
 <script>
-  var second = document.getElementById("second")
-  var milliSec = document.getElementById("milliSec")
-  var but = document.getElementById("startBtn")
-  var type = "start", interval ="";
+  var a = document.getElementById("a"),
+      b = document.getElementById("b"),
+      c = document.getElementById("c"),
+      d = document.getElementById("d"),
+      e = document.getElementById("e"),
+      f = document.getElementById("f"),
+      but = document.getElementById("operateBtn");
+  var type = "start", interval = "", numberArr = [];
+  var integerArr = "0123456789".split("");
   but.addEventListener("click", function () {
     if (type === "start") {
-      but.innerText = '暂停'
-      type = 'end'
+      but.innerText = '暂停';
+      type = 'end';
+      a.innerText = b.innerText = c.innerText = d.innerText = e.innerText = f.innerText = 0; // todo,待优化
       var baseDate = +new Date();
-      var timestamp, seconds, milliStr;
+      var timestamp = 0, randomNum = 0;
       interval = setInterval(function(){
         timestamp = new Date() - baseDate;
-        console.log(timestamp)
-        milliSec.innerHTML = (timestamp >= 1000 ? timestamp % 1000 : timestamp)
-        second.innerHTML = Math.floor(timestamp / 1000)
-        if (timestamp / 1000 >= 20) {
-          clearInterval(interval)
+        numberArr = timestamp.toString().split("").reverse();
+        randomNum = Math.floor(Math.random()*10); // 最近一位随机~~
+        a.innerText = integerArr[randomNum];
+        b.innerText = numberArr[0];
+        if (timestamp >= 10) c.innerText = numberArr[1];
+        if (timestamp >= 100) d.innerText = numberArr[2];
+        if (timestamp >= 1000) e.innerText = numberArr[3];
+        if (timestamp >= 10000) f.innerText = numberArr[4];
+        if (timestamp >= 99999) {
+          clearInterval(interval);
           but.innerText = '再来一次';
-          type = 'start'
-          second.innerText = "00"
-          milliSec.innerText = "000"
+          type = 'start';
+          a.innerText = b.innerText = c.innerText = d.innerText = e.innerText = f.innerText = 9;
         }
-      }, 0.1)
+      }, 1)
     } else {
       clearInterval(interval);
       but.innerText = '再来一次';
-      type = 'start'
+      type = 'start';
     }
   });
 </script>
