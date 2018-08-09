@@ -10,16 +10,6 @@
   <meta name=format-detection content="telephone=no">
   <meta name=format-detection content="email=no">
   <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=0">
-  <script>
-    /* 自适应设备DPR */
-    window.onload = function(){ getRem(720, 100) };
-    function getRem(pwidth, prem){
-      var html = document.getElementsByTagName("html")[0];
-      var oWidth = document.body.clientWidth || document.documentElement.clientWidth;
-      html.style.fontSize = oWidth/pwidth*prem + "px";
-      html.setAttribute('data-dpr', window.devicePixelRatio);
-    }
-  </script>
   <style>
     * {
       margin: 0;
@@ -53,66 +43,79 @@
     }
   </style>
 <body>
-<div class="title">挑战10秒整！</div>
-<div class="box-wrap">
-  <span id="f" class="number">0</span>
-  <span id="e" class="number">0</span>
-  <span class="point">.</span>
-  <span id="d" class="number">0</span>
-  <span id="c" class="number">0</span>
-  <span id="b" class="number">0</span>
-  <span id="a" class="number">0</span>
-</div>
-<div class="btn-wrap">
-  <span id="operateBtn" class="button button-3d button-action button-pill">开始</span>
-</div>
+  <div class="title">挑战10秒整！</div>
+  <div class="box-wrap">
+    <span id="f" class="number">0</span>
+    <span id="e" class="number">0</span>
+    <span class="point">.</span>
+    <span id="d" class="number">0</span>
+    <span id="c" class="number">0</span>
+    <span id="b" class="number">0</span>
+    <span id="a" class="number">0</span>
+  </div>
+  <div class="btn-wrap">
+    <span id="operateBtn" class="button button-3d button-action button-pill">开始</span>
+  </div>
+  </body>
 <script>
-  var a = document.getElementById("a"),
-      b = document.getElementById("b"),
-      c = document.getElementById("c"),
-      d = document.getElementById("d"),
-      e = document.getElementById("e"),
-      f = document.getElementById("f"),
-      but = document.getElementById("operateBtn");
+  /* 自适应设备DPR */
+  window.onload = function(){ getRem(720, 100) };
+  function getRem(pwidth, prem){
+    var html = document.getElementsByTagName("html")[0];
+    var oWidth = document.body.clientWidth || document.documentElement.clientWidth;
+    html.style.fontSize = oWidth/pwidth*prem + "px";
+    html.setAttribute('data-dpr', window.devicePixelRatio);
+  }
+</script>
+<script>
+  var getEl = function (id) { return document.getElementById(id) }
+  var a = getEl("a"), b = getEl("b"), c = getEl("c"), d = getEl("d"), e = getEl("e"), f = getEl("f"), butt = getEl("operateBtn");
   var type = "start", interval = "", numberArr = [];
   var numberSpan = document.querySelectorAll(".number");
   var integerArr = "0123456789".split("");
-  but.addEventListener("click", function () {
+  butt.addEventListener("click", function () {
     if (type === "start") {
-      but.innerText = '暂停';
+      butt.innerText = '暂停';
       type = 'end';
       for (var i = 0; i < numberSpan.length; i++) {
-          numberSpan[i].innerHTML = 0;
+        numberSpan[i].innerHTML = 0;
       }
       var baseDate = +new Date();
       var timestamp = 0, randomNum = 0;
       interval = setInterval(function(){
         timestamp = new Date() - baseDate;
         numberArr = timestamp.toString().split("").reverse();
-        randomNum = Math.floor(Math.random()*10); // 最近一位随机~~
+        randomNum = Math.floor(Math.random() * 10); // 最近一位随机~~
         a.innerText = integerArr[randomNum];
         b.innerText = numberArr[0];
-        if (timestamp >= 10) c.innerText = numberArr[1];
-        if (timestamp >= 100) d.innerText = numberArr[2];
-        if (timestamp >= 1000) e.innerText = numberArr[3];
-        if (timestamp >= 10000) f.innerText = numberArr[4];
-        if (timestamp >= 99999) {
-          clearInterval(interval);
-          but.innerText = '再来一次';
-          type = 'start';
-            for (var i = 0; i < numberSpan.length; i++) {
-                numberSpan[i].innerHTML = 9;
+        if (timestamp >= 10) {
+          c.innerText = numberArr[1];
+          if (timestamp >= 100) {
+            d.innerText = numberArr[2];
+            if (timestamp >= 1000) {
+              e.innerText = numberArr[3];
+              if (timestamp >= 10000) {
+                f.innerText = numberArr[4];
+                if (timestamp >= 99999) {
+                  clearInterval(interval);
+                  butt.innerText = '再来一次';
+                  type = 'start';
+                  for (var i = 0; i < numberSpan.length; i++) {
+                    numberSpan[i].innerHTML = 9;
+                  }
+                }
+              }
             }
+          }
         }
-      }, 1)
+      }, 1);
     } else {
       clearInterval(interval);
-      but.innerText = '再来一次';
+      butt.innerText = '再来一次';
       type = 'start';
     }
   });
 </script>
-</body>
 <style>
   .button-3d.button-action:active, .button-3d.button-action.active, .button-3d.button-action.is-active {
     -webkit-box-shadow: 0 2px 0 #6b9619, 0 3px 3px rgba(0, 0, 0, 0.2);
@@ -150,13 +153,13 @@
     background-color: #EEE;
     border-color: #EEE;
     font-weight: 300;
-    font-size: 16px;
+    font-size: 20px;
     font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     text-decoration: none;
     text-align: center;
-    line-height: 40px;
-    height: 40px;
-    padding: 0 40px;
+    line-height: 50px;
+    height: 50px;
+    padding: 0 80px;
     margin: 0;
     display: inline-block;
     appearance: none;
